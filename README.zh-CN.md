@@ -1,8 +1,12 @@
+[English](README.md) | [简体中文](README.zh-CN.md)
+
 # FM1 MIDI 转换器
 
 单页、离线的 **MIDI → FM1 工程**转换器，面向 M-VAVE FM1 合成器。把标准 MIDI
 文件和一个 FM1 V4 工程模板拖进页面，点 **转换项目**，即可下载一个保留模板音色、
 效果与调音的 `.fm1` 工程。
+
+点[这里](https://balancechiang.github.io/fm1-midi-converter/)尝试。
 
 ![转换器页面](docs/screenshot.png)
 

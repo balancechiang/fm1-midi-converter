@@ -2,9 +2,8 @@
 
 # FM1 MIDI 转换器
 
-单页、离线的 **MIDI → FM1 工程**转换器，面向 M-VAVE FM1 合成器。把标准 MIDI
-文件和一个 FM1 V4 工程模板拖进页面，点 **转换项目**，即可下载一个保留模板音色、
-效果与调音的 `.fm1` 工程。
+单页、离线的 **MIDI ↔ FM1 工程**转换器，面向 M-VAVE FM1 合成器。可将标准 MIDI
+写入 FM1 V4 工程模板，也可把 `.fm1` 中保存的步进序列导出为标准 MIDI。
 
 点[这里](https://balancechiang.github.io/fm1-midi-converter/)尝试。
 
@@ -18,6 +17,10 @@
 - 保留模板的预设、FX、ARP 与可选调音数据；编曲、速度、工程名会被替换，
   轨道静音／独奏与步进参数锁会重置。
 - 转换摘要会列出超出 64 步的音符、缺失的兼容音轨和未映射的鼓音。
+- 可将 V4 `.fm1` 工程（含可选调音块）中的 8 轨、64 步序列导出为格式 1 MIDI，
+  包括速度、和弦、力度、门长／连音及鼓步进。
+- MIDI 导出只读取项目中保存的序列，不会渲染音色、琶音或采样音频；808 鼓垫和
+  采样槽会映射到通用 MIDI 鼓音。
 - 英文 / 简体中文界面，页头可切换（记在 `localStorage`）。
 - 全程在浏览器本地完成：文件由 File API 读取，不会上传。
 
@@ -53,10 +56,11 @@ deployment → Deploy from a branch*，分支 `main`，目录 `/ (root)`。无�
 | 项目 | 限制 |
 | --- | --- |
 | 输入 | 标准 MIDI 文件，格式 0/1，最大 16 MiB，10 万个音符 |
-| 输出 | FM1P V4 `.fm1` 工程，4064 字节负载（含调音为 4264） |
+| MIDI 导入输出 | FM1P V4 `.fm1` 工程，4064 字节负载（含调音为 4264） |
+| MIDI 导出输出 | 格式 1 标准 MIDI，96 PPQN |
 | 序列范围 | 64 个十六分音符步进 |
 | 工程名 | 12 个 ASCII 字符 |
-| 方向 | 仅 MIDI → FM1（不支持 FM1 → MIDI 导出） |
+| 方向 | MIDI → FM1；FM1 → 标准 MIDI |
 
 鼓组只会写入 808 音轨；MIDI 声部只会写入引擎兼容的音轨，其余内容会出现在摘要里，
 不会被写入。
@@ -68,7 +72,7 @@ deployment → Deploy from a branch*，分支 `main`，目录 `/ (root)`。无�
 ```
 index.html          生成的自包含页面（提交到仓库以便 Pages 直接发布）
 dev.html            同一页面，用 <script src="src/..."> 引用，便于调试
-src/converter.js    MIDI 解析与 FM1 工程写入
+src/converter.js    MIDI 解析、FM1 工程读写与 MIDI 导出
 src/i18n.js         界面字符串表（英文 / 简体中文）
 src/shell.html      页面外壳、转换器标记与样式、脚本占位
 tools/build.py      由 src/ 生成 index.html 与 dev.html

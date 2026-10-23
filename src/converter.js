@@ -485,6 +485,112 @@
     return file;
   }
 
+  function variableLength(value) {
+    assert(Number.isInteger(value) && value >= 0 && value <= 0x0fffffff, 'MIDI 时间位置超出安全范围');
+    const bytes = [value & 127];
+    while ((value >>= 7) > 0) bytes.unshift((value & 127) | 128);
+    return bytes;
+  }
+
+  function midiChunk(id, data) {
+    const chunk = new Uint8Array(8 + data.length);
+    chunk.set(id, 0);
+    new DataView(chunk.buffer).setUint32(4, data.length, false);
+    chunk.set(data, 8);
+    return chunk;
+  }
+
+  function createMidiTrack(name, events) {
+    const nameBytes = new TextEncoder().encode(name);
+    const data = [0, 0xff, 0x03, ...variableLength(nameBytes.length), ...nameBytes];
+    let previousTick = 0;
+    events.sort((a, b) => a.tick - b.tick || a.priority - b.priority || a.order - b.order);
+    for (const event of events) {
+      data.push(...variableLength(event.tick - previousTick), ...event.bytes);
+      previousTick = event.tick;
+    }
+    data.push(0, 0xff, 0x2f, 0);
+    return midiChunk([77,84,114,107], Uint8Array.from(data));
+  }
+
+  function exportProjectToMidi(file) {
+    const project = readTemplate(file);
+    const payload = project.payload, types = validatePayload(payload);
+    const payloadView = new DataView(payload.buffer, payload.byteOffset, payload.byteLength);
+    const tempo = payloadView.getUint16(TEMPO_OFFSET, true);
+    const ticksPerStep = 24, eventsByTrack = [];
+    let noteCount = 0;
+    const drumNotes = [36,38,41,45,48,37,39,53,49,46,42];
+
+    for (let track = 0; track < 8; track++) {
+      const type = types[track], isDrum = type === 2 || type === 5;
+      const steps = [];
+      for (let step = 0; step < STEP_COUNT; step++) {
+        const at = track * STEP_COUNT * 4 + step * 4;
+        const word = payloadView.getUint16(at + 2, true);
+        const chordId = word & 31, gate = isDrum ? 16 : Math.max(1, (word >>> 5) & 15);
+        const pitches = [];
+        if (isDrum) {
+          const padLimit = type === 2 ? 11 : 8;
+          for (let pad = 0; pad < padLimit; pad++) {
+            if (word & (1 << pad)) pitches.push(drumNotes[pad]);
+          }
+        } else if (payload[at + 1] > 0) {
+          const root = payload[at];
+          pitches.push(root);
+          if (chordId > 0) {
+            const chordAt = CHORD_OFFSET + (chordId - 1) * 8;
+            const count = payload[chordAt];
+            for (let index = 1; index < count; index++) pitches.push(root + payload[chordAt + index]);
+          }
+        }
+        steps.push({at, word, gate, pitches});
+      }
+
+      const events = [];
+      const channel = isDrum ? 9 : track;
+      let order = 0;
+      for (let step = 0; step < STEP_COUNT; step++) {
+        const current = steps[step];
+        for (const pitch of current.pitches) {
+          if (step > 0 && (steps[step - 1].word & 0x1000) && steps[step - 1].pitches.includes(pitch)) continue;
+          let lastStep = step;
+          while (lastStep < STEP_COUNT - 1 && (steps[lastStep].word & 0x1000) &&
+            steps[lastStep + 1].pitches.includes(pitch)) lastStep++;
+          const duration = Math.max(1, Math.ceil(steps[lastStep].gate * ticksPerStep / 16));
+          const endTick = lastStep * ticksPerStep + duration;
+          const velocity = payload[current.at + 1];
+          if (!velocity) continue;
+          events.push({tick:step * ticksPerStep, priority:1, order:order++,
+            bytes:[0x90 | channel, pitch, velocity]});
+          events.push({tick:endTick, priority:0, order:order++,
+            bytes:[0x80 | channel, pitch, 0]});
+          noteCount++;
+        }
+      }
+      if (events.length) {
+        const trackName = `FM1 Track ${track + 1} ${SOURCE_NAMES[type]}`;
+        eventsByTrack.push(createMidiTrack(trackName, events));
+      }
+    }
+    if (!eventsByTrack.length) eventsByTrack.push(createMidiTrack('FM1 Track 1', []));
+
+    const micros = Math.round(60000000 / tempo);
+    const tempoTrack = createMidiTrack('FM1 MIDI Export', [
+      {tick:0, priority:0, order:0, bytes:[0xff,0x51,3,(micros >>> 16) & 255,(micros >>> 8) & 255,micros & 255]},
+      {tick:0, priority:1, order:1, bytes:[0xff,0x58,4,4,2,24,8]}
+    ]);
+    const tracks = [tempoTrack, ...eventsByTrack];
+    const fileBytes = new Uint8Array(14 + tracks.reduce((sum, trackChunk) => sum + trackChunk.length, 0));
+    fileBytes.set([77,84,104,100,0,0,0,6,0,1,(tracks.length >>> 8) & 255,tracks.length & 255,0,96]);
+    let cursor = 14;
+    for (const trackChunk of tracks) {
+      fileBytes.set(trackChunk, cursor);
+      cursor += trackChunk.length;
+    }
+    return {file:fileBytes, tempo, tracks:eventsByTrack.length, noteCount, tuned:project.tuned};
+  }
+
   function initUI() {
     if (typeof document === 'undefined' || !$('convert-midi-drop')) return;
     let midiFile = null, templateFile = null, convertedFile = null, userChangedName = false, busy = false;
@@ -632,10 +738,112 @@
       anchor.click();
       setTimeout(() => URL.revokeObjectURL(url), 1000);
     });
-    document.addEventListener('fm1-language-change', refresh);
+    let exportFile = null, exportedMidi = null, exportBusy = false;
+    const exportInput = $('export-fm1-file');
+    const exportZone = $('export-fm1-drop');
+    function refreshExport() {
+      $('export-fm1-run').disabled = exportBusy || !exportFile;
+      exportZone.disabled = exportBusy;
+      exportInput.disabled = exportBusy;
+      $('export-fm1-title').textContent = exportFile?.name || translate('选择或拖入 FM1 项目');
+      $('export-fm1-name').textContent = exportFile
+        ? `${(exportFile.size / 1024).toFixed(1)} KiB` : translate('.fm1 · V4，最多 4,280 字节');
+    }
+    function acceptExportFile(file) {
+      if (!file || exportBusy) return;
+      exportedMidi = null;
+      exportFile = null;
+      $('export-fm1-result').hidden = true;
+      const node = $('export-fm1-feedback');
+      node.dataset.error = 'false';
+      if (!/\.fm1$/i.test(file.name)) {
+        node.textContent = translate('请选择 .fm1 项目文件');
+        node.dataset.error = 'true';
+        refreshExport();
+        return;
+      }
+      if (file.size !== PROJECT_HEADER + PROJECT_BYTES && file.size !== PROJECT_HEADER + TUNED_BYTES) {
+        node.textContent = translate('仅支持 4,080 或 4,280 字节的 V4 .fm1 项目');
+        node.dataset.error = 'true';
+        refreshExport();
+        return;
+      }
+      exportFile = file;
+      node.textContent = translate('文件已就绪；所有内容仅在浏览器本地处理');
+      refreshExport();
+    }
+    exportZone.addEventListener('click', () => exportInput.click());
+    exportZone.addEventListener('keydown', event => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        exportInput.click();
+      }
+    });
+    exportInput.addEventListener('change', () => {
+      acceptExportFile(exportInput.files?.[0]);
+      exportInput.value = '';
+    });
+    let exportDragDepth = 0;
+    exportZone.addEventListener('dragenter', event => {
+      event.preventDefault();
+      exportDragDepth++;
+      exportZone.classList.add('is-dragging');
+    });
+    exportZone.addEventListener('dragover', event => event.preventDefault());
+    exportZone.addEventListener('dragleave', event => {
+      event.preventDefault();
+      exportDragDepth = Math.max(0, exportDragDepth - 1);
+      if (!exportDragDepth) exportZone.classList.remove('is-dragging');
+    });
+    exportZone.addEventListener('drop', event => {
+      event.preventDefault();
+      exportDragDepth = 0;
+      exportZone.classList.remove('is-dragging');
+      acceptExportFile(event.dataTransfer?.files?.[0]);
+    });
+    $('export-fm1-run').addEventListener('click', async () => {
+      if (exportBusy || !exportFile) return;
+      exportBusy = true;
+      refreshExport();
+      const feedback = $('export-fm1-feedback');
+      feedback.dataset.error = 'false';
+      feedback.textContent = translate('正在校验 FM1 项目并生成 MIDI…');
+      try {
+        const buffer = await exportFile.arrayBuffer();
+        const result = exportProjectToMidi(new Uint8Array(buffer));
+        exportedMidi = result.file;
+        $('export-fm1-summary').textContent =
+          `${translate('速度')}: ${result.tempo} BPM · ${translate('音符')}: ${result.noteCount} · ${translate('轨道')}: ${result.tracks}`;
+        $('export-fm1-result').hidden = false;
+        feedback.textContent = translate('MIDI 已生成；仅导出项目中保存的 64 步音符序列');
+      } catch (error) {
+        exportedMidi = null;
+        feedback.textContent = error instanceof Error ? translate(error.message) : translate('MIDI 导出失败');
+        feedback.dataset.error = 'true';
+      } finally {
+        exportBusy = false;
+        refreshExport();
+      }
+    });
+    $('export-fm1-download').addEventListener('click', () => {
+      assert(exportedMidi, '没有可下载的 MIDI 结果');
+      const blob = new Blob([exportedMidi], {type:'audio/midi'});
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement('a');
+      const name = exportFile?.name.replace(/\.fm1$/i, '') || 'FM1 EXPORT';
+      anchor.href = url;
+      anchor.download = `${name}.mid`;
+      anchor.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    });
+    document.addEventListener('fm1-language-change', () => {
+      refresh();
+      refreshExport();
+    });
     refresh();
+    refreshExport();
   }
 
-  globalThis.FM1MidiConverter = Object.freeze({crc32, readTemplate, validatePayload, parseMidi, convert});
+  globalThis.FM1MidiConverter = Object.freeze({crc32, readTemplate, validatePayload, parseMidi, convert, exportProjectToMidi});
   initUI();
 })();

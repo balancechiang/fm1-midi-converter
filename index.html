@@ -9,6 +9,7 @@
 <style>:root{color-scheme:light;background:#dce2dc;color:#192421;font:14px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif}*{box-sizing:border-box}body{margin:0;min-height:100vh;background:linear-gradient(145deg,#dce2dc,#eef0eb 60%,#d5ded8)}main{max-width:1120px;margin:auto;padding:28px 24px 40px}.preview-brand{display:flex;align-items:center;justify-content:space-between;gap:15px;margin:0 auto 20px;max-width:1040px;color:#41524b;font:11px/1.4 Consolas,monospace;letter-spacing:.12em}.preview-brand strong{font:600 18px/1 system-ui,sans-serif;letter-spacing:-.04em;color:#192421}.preview-lang{display:flex;align-items:center;gap:6px;margin:0;font:11px/1.4 system-ui,sans-serif;letter-spacing:0;color:#3d4d46}.preview-lang select{font:11px/1.4 system-ui,sans-serif;padding:4px 6px;border:1px solid #aebbb3;border-radius:4px;background:#f5f6f2;color:#192421}button{font:inherit;padding:9px 14px;border:1px solid #9fb0a6;border-radius:6px;background:#f5f6f2;color:#192421;cursor:pointer}button:hover:enabled{background:#fbfcf8;border-color:#2f745e}button:disabled{opacity:.55;cursor:default}button.primary{background:#cfe8da;border-color:#6ea88d;color:#123024;font-weight:600}input[type=text]{font:inherit;padding:8px 10px;border:1px solid #aebbb3;border-radius:5px;background:#f5f6f2;color:#192421}label{display:flex;align-items:center;gap:8px;font-size:11px;color:#485a52}dl{display:grid;margin:0}dd{margin:0;overflow-wrap:anywhere}@media(max-width:520px){main{padding:18px 12px 28px}.preview-brand{padding:0 8px;flex-wrap:wrap}}</style>
 <style>.convert-page{max-width:1040px!important;margin:0 auto!important;padding:clamp(20px,4vw,42px)!important;background:#e7ebe5!important;border:1px solid #c4cdc7!important;border-radius:10px!important;color:#192421!important}
 .convert-page h2,.convert-page h3,.convert-page strong{color:#192421}.convert-page h2{font-size:clamp(24px,4vw,36px);line-height:1.15;letter-spacing:-.04em;margin:4px 0 10px}.convert-page p{color:#52615c}.convert-kicker{font:10px/1.4 Consolas,monospace;letter-spacing:.16em;color:#54665f!important}.convert-intro{max-width:670px;margin:0 0 26px;font-size:13px}.convert-layout{display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:24px;align-items:start}.convert-files{display:grid;grid-template-columns:1fr 1fr;gap:12px}.convert-drop{display:grid;min-height:170px;align-content:space-between;gap:16px;text-align:left;padding:18px;margin:0;border:1px dashed #7c9186;border-radius:7px;background:#f2f4ef;color:#26342f}.convert-drop:hover,.convert-drop.is-dragging{background:#f8faf6;border-color:#2f745e}.convert-drop:focus-visible{outline-color:#276a54}.convert-drop .convert-step{font:10px/1.4 Consolas,monospace;letter-spacing:.12em;color:#5d7568}.convert-drop strong{font-size:16px;line-height:1.3;overflow-wrap:anywhere}.convert-drop small{color:#687771}.convert-file-input{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;clip-path:inset(50%)}.convert-file-input:focus-visible+.convert-input-focus{outline:2px solid #276a54;outline-offset:4px}.convert-project-field{margin:16px 0 0}.convert-project-field label{margin:0 0 6px;font-size:11px;color:#485a52}.convert-project-field input{width:100%;max-width:240px;background:#f5f6f2;color:#192421;border-color:#aebbb3}.convert-action{display:flex;gap:12px;align-items:center;margin-top:18px}.convert-action button{margin:0;padding:11px 18px}.convert-action small{color:#58675f}.convert-spec{border-left:1px solid #c4cdc7;padding-left:20px}.convert-spec h3{font-size:12px;letter-spacing:.08em;margin:0 0 14px}.convert-spec dl{grid-template-columns:1fr auto;gap:9px 12px;font-size:11px}.convert-spec dt{color:#63736c}.convert-spec dd{color:#26342f;text-align:right;font-family:Consolas,monospace}.convert-local{margin:16px 0 0;padding-top:13px;border-top:1px solid #c4cdc7;font-size:11px;line-height:1.7}.convert-feedback{min-height:24px;margin:14px 0 0;color:#355f4d!important;font-size:12px}.convert-feedback[data-error=true]{color:#9a3029!important}.convert-result{margin-top:28px;padding-top:20px;border-top:1px solid #bdc8c0}.convert-result h3{font-size:16px;margin:0 0 12px}.convert-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.convert-stat{padding:11px;border:1px solid #c3cec6;background:#f0f3ee;border-radius:5px}.convert-stat span{display:block;font-size:10px;color:#63736c}.convert-stat strong{display:block;margin-top:4px;font:18px/1.2 Consolas,monospace}.convert-tracks{margin:12px 0;padding:12px 14px;background:#f0f3ee;border-left:2px solid #6d9a82;font-size:11px;white-space:pre-wrap;overflow-wrap:anywhere}.convert-warnings{margin:10px 0 0;padding-left:18px;color:#754b25;font-size:11px}.convert-download{margin:14px 0 0!important}.convert-disclaimer{margin-top:20px;padding-top:14px;border-top:1px solid #c4cdc7;font-size:10px;line-height:1.7}
+.convert-export{margin-top:28px;padding-top:22px;border-top:1px solid #bdc8c0}.convert-export h3{font-size:17px;margin:0 0 8px}.convert-export>p{max-width:700px;font-size:12px}.convert-export .convert-drop{width:100%;min-height:110px;margin-top:14px}
 @media(max-width:760px){.convert-layout{grid-template-columns:1fr}.convert-spec{border-left:0;border-top:1px solid #c4cdc7;padding:15px 0 0}.convert-spec dl{grid-template-columns:1fr auto}.convert-drop{min-height:145px}}
 @media(max-width:520px){.convert-page{padding:18px!important}.convert-files{grid-template-columns:1fr}.convert-drop{min-height:116px;gap:10px}.convert-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.convert-action{align-items:flex-start;flex-direction:column}.convert-project-field input{max-width:none}}
 </style>
@@ -16,8 +17,8 @@
 <div class="preview-brand"><strong>FM1 / MIDI CONVERTER</strong><label class="preview-lang">Language / &#35821;&#35328; <select id="language" aria-label="Language"><option value="en">English</option><option value="zh-CN">&#31616;&#20307;&#20013;&#25991;</option></select></label></div>
 <section id="tab-convert" class="convert-page">
 <p class="convert-kicker">FM1 / SEQUENCER TOOL</p>
-<h2>MIDI 编排 → FM1 项目</h2>
-<p class="convert-intro">把标准 MIDI 的前 64 个十六分音符步进写入 FM1 项目。上传一个项目模板以保留它的音色、效果与调音；本页只在浏览器中读取文件，不会上传文件。</p>
+<h2>MIDI ↔ FM1 项目</h2>
+<p class="convert-intro">可将标准 MIDI 的前 64 个十六分音符步进写入 FM1 项目，也可把项目中保存的序列导出为 MIDI。文件仅在浏览器本地处理，不会上传。</p>
 <div class="convert-layout">
 <div>
 <div class="convert-files">
@@ -39,6 +40,18 @@
 <button id="convert-download" class="primary convert-download" type="button">下载 .fm1 项目</button>
 </div>
 <p class="convert-disclaimer">MIDI 声部映射到模板中已有的音源轨；鼓只映射到 808 轨。超出 64 步、无兼容轨道或无法映射的鼓声部会在摘要中说明。输入文件不会离开此设备。</p>
+<div class="convert-export">
+<h3>FM1 项目 → MIDI</h3>
+<p>导出项目中保存的 64 步序列；不会渲染音色、琶音或采样音频。FM1 鼓垫和采样槽会转换为对应的通用 MIDI 鼓音。</p>
+<button id="export-fm1-drop" class="convert-drop" type="button" aria-describedby="export-fm1-name"><span class="convert-step">FM1 PROJECT</span><strong id="export-fm1-title">选择或拖入 FM1 项目</strong><small id="export-fm1-name">.fm1 · V4，最多 4,280 字节</small></button>
+<input id="export-fm1-file" class="convert-file-input" type="file" accept=".fm1" aria-label="选择要导出的 FM1 项目" tabindex="-1">
+<div class="convert-action"><button id="export-fm1-run" class="primary" type="button" disabled>导出 MIDI</button></div>
+<p id="export-fm1-feedback" class="convert-feedback" role="status" aria-live="polite"></p>
+<div id="export-fm1-result" class="convert-result" hidden aria-live="polite">
+<h3>MIDI 导出摘要</h3><p id="export-fm1-summary" class="convert-tracks"></p>
+<button id="export-fm1-download" class="primary convert-download" type="button">下载 .mid 文件</button>
+</div>
+</div>
 </section>
 </main>
 <script>/* SPDX-License-Identifier: GPL-3.0-only WITH GPL-3.0-linking-exception */
@@ -81,6 +94,8 @@
   "演奏与编辑": "Play & edit",
   "MIDI 转换": "MIDI converter",
   "MIDI 编排 → FM1 项目": "MIDI arrangement → FM1 project",
+  "MIDI ↔ FM1 项目": "MIDI ↔ FM1 project",
+  "可将标准 MIDI 的前 64 个十六分音符步进写入 FM1 项目，也可把项目中保存的序列导出为 MIDI。文件仅在浏览器本地处理，不会上传。": "Write the first 64 sixteenth-note steps from standard MIDI into an FM1 project, or export the sequence stored in a project as MIDI. Files are processed locally in this browser and never uploaded.",
   "把标准 MIDI 的前 64 个十六分音符步进写入 FM1 项目。上传一个项目模板以保留它的音色、效果与调音；本页只在浏览器中读取文件，不会上传文件。": "Write the first 64 sixteenth-note steps from a standard MIDI file into an FM1 project. Supply a project template to keep its sounds, effects and tuning. Files are read in this browser and never uploaded.",
   "选择或拖入 MIDI 文件": "Choose or drop a MIDI file",
   ".mid / .midi · 最多 16 MiB": ".mid / .midi · up to 16 MiB",
@@ -108,6 +123,22 @@
   "同一步 FM1 鼓垫共用力度，已采用最高值": "FM1 drum pads on the same step share velocity; the highest value was used",
   "MIDI 声部映射到模板中已有的音源轨；鼓只映射到 808 轨。超出 64 步、无兼容轨道或无法映射的鼓声部会在摘要中说明。输入文件不会离开此设备。": "MIDI parts map to compatible sound tracks in the template; drums map only to 808 tracks. The summary reports notes beyond 64 steps, missing compatible tracks and unmapped drum sounds. Input files stay on this device.",
   "转换失败；项目文件未生成": "Conversion failed; no project file was generated",
+  "FM1 项目 → MIDI": "FM1 project → MIDI",
+  "导出项目中保存的 64 步序列；不会渲染音色、琶音或采样音频。FM1 鼓垫和采样槽会转换为对应的通用 MIDI 鼓音。": "Export the 64-step sequence stored in the project. Sounds, arpeggiators and sample audio are not rendered. FM1 drum pads and sample slots are mapped to General MIDI drum notes.",
+  "选择或拖入 FM1 项目": "Choose or drop an FM1 project",
+  ".fm1 · V4，最多 4,280 字节": ".fm1 · V4, up to 4,280 bytes",
+  "选择要导出的 FM1 项目": "Choose the FM1 project to export",
+  "导出 MIDI": "Export MIDI",
+  "MIDI 导出摘要": "MIDI export summary",
+  "下载 .mid 文件": "Download .mid file",
+  "请选择 .fm1 项目文件": "Choose an .fm1 project file",
+  "仅支持 4,080 或 4,280 字节的 V4 .fm1 项目": "Only 4,080- or 4,280-byte V4 .fm1 projects are supported",
+  "正在校验 FM1 项目并生成 MIDI…": "Validating the FM1 project and creating MIDI…",
+  "MIDI 已生成；仅导出项目中保存的 64 步音符序列": "MIDI created; only the 64-step note sequence stored in the project is exported",
+  "MIDI 导出失败": "MIDI export failed",
+  "音符": "Notes",
+  "轨道": "Tracks",
+  "没有可下载的 MIDI 结果": "No MIDI result is available to download",
   "文件已就绪；所有内容仅在浏览器本地处理": "Files ready; processing stays in this browser",
   "正在本地解析 MIDI 与校验 FM1 模板…": "Parsing MIDI and validating the FM1 template locally…",
   "FM1 项目已生成并通过 V4 容器、长度与 CRC32 复核": "FM1 project generated; V4 container, length and CRC32 verified",
@@ -194,7 +225,7 @@
   "导出文件可备份到电脑；浏览器存档与设备项目分别保存。": "Export files to back up on your computer. Browser and device projects are saved separately.",
   "此预览使用演示采样；项目文件不包含采样音频。": "This preview uses demo samples. Project files do not contain sample audio.",
   "© 2026 M-VAVE。APP 采用 GPLv3＋SDK 链接例外，可依许可修改和再分发，按现状提供，不提供担保。SDK 与第三方组件条款见下方声明。": "© 2026 M-VAVE. APP: GPLv3 with an SDK linking exception; modification and redistribution are permitted under its terms, without warranty. See below for SDK and third-party terms.",
-  "“MIDI 转换”仅接受格式 0／1、PPQN 的标准 MIDI 和通过长度、版本、CRC32 校验的 V4 `.fm1` 模板（含可选调音块）。它保留模板音色、效果、ARP 与调音，将前 64 个十六分音符写入项目；MIDI 鼓映射到模板的 808 轨，旋律映射到兼容音源轨。超出范围、量化、未映射和不支持内容都会在摘要中提示；文件仅在浏览器本地处理。": "MIDI Converter accepts standard MIDI formats 0/1 using PPQN and V4 `.fm1` templates with valid length, version and CRC32 (including an optional tuning block). It keeps template sounds, effects, ARP and tuning, then writes the first 64 sixteenth notes. MIDI drums map to an 808 track and melody maps to compatible sound tracks. The summary reports out-of-range, quantized, unmapped and unsupported content. Files are processed locally in the browser.",
+  "“MIDI 转换”可双向转换标准 MIDI 与 FM1 V4 `.fm1` 项目。MIDI 导入会保留模板音色、效果、ARP 与调音，将前 64 个十六分音符写入项目；MIDI 导出读取项目保存的步进序列、速度、力度、和弦与鼓步进，不会渲染音色、琶音或采样音频。文件仅在浏览器本地处理。": "MIDI Converter converts standard MIDI and FM1 V4 `.fm1` projects in both directions. MIDI import keeps template sounds, effects, ARP and tuning, then writes the first 64 sixteenth notes. MIDI export reads the stored step sequence, tempo, velocity, chords and drum steps; it does not render sounds, arpeggios or sample audio. Files are processed locally in the browser.",
   "源码与 SDK": "Source + SDK",
   "官方论坛": "Official forum",
   "版权与许可声明": "Copyright and license notices",
@@ -1523,6 +1554,112 @@
     return file;
   }
 
+  function variableLength(value) {
+    assert(Number.isInteger(value) && value >= 0 && value <= 0x0fffffff, 'MIDI 时间位置超出安全范围');
+    const bytes = [value & 127];
+    while ((value >>= 7) > 0) bytes.unshift((value & 127) | 128);
+    return bytes;
+  }
+
+  function midiChunk(id, data) {
+    const chunk = new Uint8Array(8 + data.length);
+    chunk.set(id, 0);
+    new DataView(chunk.buffer).setUint32(4, data.length, false);
+    chunk.set(data, 8);
+    return chunk;
+  }
+
+  function createMidiTrack(name, events) {
+    const nameBytes = new TextEncoder().encode(name);
+    const data = [0, 0xff, 0x03, ...variableLength(nameBytes.length), ...nameBytes];
+    let previousTick = 0;
+    events.sort((a, b) => a.tick - b.tick || a.priority - b.priority || a.order - b.order);
+    for (const event of events) {
+      data.push(...variableLength(event.tick - previousTick), ...event.bytes);
+      previousTick = event.tick;
+    }
+    data.push(0, 0xff, 0x2f, 0);
+    return midiChunk([77,84,114,107], Uint8Array.from(data));
+  }
+
+  function exportProjectToMidi(file) {
+    const project = readTemplate(file);
+    const payload = project.payload, types = validatePayload(payload);
+    const payloadView = new DataView(payload.buffer, payload.byteOffset, payload.byteLength);
+    const tempo = payloadView.getUint16(TEMPO_OFFSET, true);
+    const ticksPerStep = 24, eventsByTrack = [];
+    let noteCount = 0;
+    const drumNotes = [36,38,41,45,48,37,39,53,49,46,42];
+
+    for (let track = 0; track < 8; track++) {
+      const type = types[track], isDrum = type === 2 || type === 5;
+      const steps = [];
+      for (let step = 0; step < STEP_COUNT; step++) {
+        const at = track * STEP_COUNT * 4 + step * 4;
+        const word = payloadView.getUint16(at + 2, true);
+        const chordId = word & 31, gate = isDrum ? 16 : Math.max(1, (word >>> 5) & 15);
+        const pitches = [];
+        if (isDrum) {
+          const padLimit = type === 2 ? 11 : 8;
+          for (let pad = 0; pad < padLimit; pad++) {
+            if (word & (1 << pad)) pitches.push(drumNotes[pad]);
+          }
+        } else if (payload[at + 1] > 0) {
+          const root = payload[at];
+          pitches.push(root);
+          if (chordId > 0) {
+            const chordAt = CHORD_OFFSET + (chordId - 1) * 8;
+            const count = payload[chordAt];
+            for (let index = 1; index < count; index++) pitches.push(root + payload[chordAt + index]);
+          }
+        }
+        steps.push({at, word, gate, pitches});
+      }
+
+      const events = [];
+      const channel = isDrum ? 9 : track;
+      let order = 0;
+      for (let step = 0; step < STEP_COUNT; step++) {
+        const current = steps[step];
+        for (const pitch of current.pitches) {
+          if (step > 0 && (steps[step - 1].word & 0x1000) && steps[step - 1].pitches.includes(pitch)) continue;
+          let lastStep = step;
+          while (lastStep < STEP_COUNT - 1 && (steps[lastStep].word & 0x1000) &&
+            steps[lastStep + 1].pitches.includes(pitch)) lastStep++;
+          const duration = Math.max(1, Math.ceil(steps[lastStep].gate * ticksPerStep / 16));
+          const endTick = lastStep * ticksPerStep + duration;
+          const velocity = payload[current.at + 1];
+          if (!velocity) continue;
+          events.push({tick:step * ticksPerStep, priority:1, order:order++,
+            bytes:[0x90 | channel, pitch, velocity]});
+          events.push({tick:endTick, priority:0, order:order++,
+            bytes:[0x80 | channel, pitch, 0]});
+          noteCount++;
+        }
+      }
+      if (events.length) {
+        const trackName = `FM1 Track ${track + 1} ${SOURCE_NAMES[type]}`;
+        eventsByTrack.push(createMidiTrack(trackName, events));
+      }
+    }
+    if (!eventsByTrack.length) eventsByTrack.push(createMidiTrack('FM1 Track 1', []));
+
+    const micros = Math.round(60000000 / tempo);
+    const tempoTrack = createMidiTrack('FM1 MIDI Export', [
+      {tick:0, priority:0, order:0, bytes:[0xff,0x51,3,(micros >>> 16) & 255,(micros >>> 8) & 255,micros & 255]},
+      {tick:0, priority:1, order:1, bytes:[0xff,0x58,4,4,2,24,8]}
+    ]);
+    const tracks = [tempoTrack, ...eventsByTrack];
+    const fileBytes = new Uint8Array(14 + tracks.reduce((sum, trackChunk) => sum + trackChunk.length, 0));
+    fileBytes.set([77,84,104,100,0,0,0,6,0,1,(tracks.length >>> 8) & 255,tracks.length & 255,0,96]);
+    let cursor = 14;
+    for (const trackChunk of tracks) {
+      fileBytes.set(trackChunk, cursor);
+      cursor += trackChunk.length;
+    }
+    return {file:fileBytes, tempo, tracks:eventsByTrack.length, noteCount, tuned:project.tuned};
+  }
+
   function initUI() {
     if (typeof document === 'undefined' || !$('convert-midi-drop')) return;
     let midiFile = null, templateFile = null, convertedFile = null, userChangedName = false, busy = false;
@@ -1670,11 +1807,113 @@
       anchor.click();
       setTimeout(() => URL.revokeObjectURL(url), 1000);
     });
-    document.addEventListener('fm1-language-change', refresh);
+    let exportFile = null, exportedMidi = null, exportBusy = false;
+    const exportInput = $('export-fm1-file');
+    const exportZone = $('export-fm1-drop');
+    function refreshExport() {
+      $('export-fm1-run').disabled = exportBusy || !exportFile;
+      exportZone.disabled = exportBusy;
+      exportInput.disabled = exportBusy;
+      $('export-fm1-title').textContent = exportFile?.name || translate('选择或拖入 FM1 项目');
+      $('export-fm1-name').textContent = exportFile
+        ? `${(exportFile.size / 1024).toFixed(1)} KiB` : translate('.fm1 · V4，最多 4,280 字节');
+    }
+    function acceptExportFile(file) {
+      if (!file || exportBusy) return;
+      exportedMidi = null;
+      exportFile = null;
+      $('export-fm1-result').hidden = true;
+      const node = $('export-fm1-feedback');
+      node.dataset.error = 'false';
+      if (!/\.fm1$/i.test(file.name)) {
+        node.textContent = translate('请选择 .fm1 项目文件');
+        node.dataset.error = 'true';
+        refreshExport();
+        return;
+      }
+      if (file.size !== PROJECT_HEADER + PROJECT_BYTES && file.size !== PROJECT_HEADER + TUNED_BYTES) {
+        node.textContent = translate('仅支持 4,080 或 4,280 字节的 V4 .fm1 项目');
+        node.dataset.error = 'true';
+        refreshExport();
+        return;
+      }
+      exportFile = file;
+      node.textContent = translate('文件已就绪；所有内容仅在浏览器本地处理');
+      refreshExport();
+    }
+    exportZone.addEventListener('click', () => exportInput.click());
+    exportZone.addEventListener('keydown', event => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        exportInput.click();
+      }
+    });
+    exportInput.addEventListener('change', () => {
+      acceptExportFile(exportInput.files?.[0]);
+      exportInput.value = '';
+    });
+    let exportDragDepth = 0;
+    exportZone.addEventListener('dragenter', event => {
+      event.preventDefault();
+      exportDragDepth++;
+      exportZone.classList.add('is-dragging');
+    });
+    exportZone.addEventListener('dragover', event => event.preventDefault());
+    exportZone.addEventListener('dragleave', event => {
+      event.preventDefault();
+      exportDragDepth = Math.max(0, exportDragDepth - 1);
+      if (!exportDragDepth) exportZone.classList.remove('is-dragging');
+    });
+    exportZone.addEventListener('drop', event => {
+      event.preventDefault();
+      exportDragDepth = 0;
+      exportZone.classList.remove('is-dragging');
+      acceptExportFile(event.dataTransfer?.files?.[0]);
+    });
+    $('export-fm1-run').addEventListener('click', async () => {
+      if (exportBusy || !exportFile) return;
+      exportBusy = true;
+      refreshExport();
+      const feedback = $('export-fm1-feedback');
+      feedback.dataset.error = 'false';
+      feedback.textContent = translate('正在校验 FM1 项目并生成 MIDI…');
+      try {
+        const buffer = await exportFile.arrayBuffer();
+        const result = exportProjectToMidi(new Uint8Array(buffer));
+        exportedMidi = result.file;
+        $('export-fm1-summary').textContent =
+          `${translate('速度')}: ${result.tempo} BPM · ${translate('音符')}: ${result.noteCount} · ${translate('轨道')}: ${result.tracks}`;
+        $('export-fm1-result').hidden = false;
+        feedback.textContent = translate('MIDI 已生成；仅导出项目中保存的 64 步音符序列');
+      } catch (error) {
+        exportedMidi = null;
+        feedback.textContent = error instanceof Error ? translate(error.message) : translate('MIDI 导出失败');
+        feedback.dataset.error = 'true';
+      } finally {
+        exportBusy = false;
+        refreshExport();
+      }
+    });
+    $('export-fm1-download').addEventListener('click', () => {
+      assert(exportedMidi, '没有可下载的 MIDI 结果');
+      const blob = new Blob([exportedMidi], {type:'audio/midi'});
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement('a');
+      const name = exportFile?.name.replace(/\.fm1$/i, '') || 'FM1 EXPORT';
+      anchor.href = url;
+      anchor.download = `${name}.mid`;
+      anchor.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    });
+    document.addEventListener('fm1-language-change', () => {
+      refresh();
+      refreshExport();
+    });
     refresh();
+    refreshExport();
   }
 
-  globalThis.FM1MidiConverter = Object.freeze({crc32, readTemplate, validatePayload, parseMidi, convert});
+  globalThis.FM1MidiConverter = Object.freeze({crc32, readTemplate, validatePayload, parseMidi, convert, exportProjectToMidi});
   initUI();
 })();
 </script>

@@ -2,10 +2,9 @@
 
 # FM1 MIDI Converter
 
-A single-page, offline **MIDI → FM1 project** converter for the M-VAVE FM1
-synthesizer. Drop a standard MIDI file and an FM1 V4 project template into the
-page, press **Convert project**, and download a `.fm1` project that keeps the
-template's sounds, effects and tuning.
+A single-page, offline **MIDI ↔ FM1 project** converter for the M-VAVE FM1
+synthesizer. Convert standard MIDI into an FM1 V4 project template, or export
+the stored step sequence in an `.fm1` project as standard MIDI.
 
 Try it [here](https://balancechiang.github.io/fm1-midi-converter/).
 
@@ -23,6 +22,12 @@ Try it [here](https://balancechiang.github.io/fm1-midi-converter/).
   parameter locks are reset.
 - Reports notes beyond step 64, missing compatible tracks and unmapped drum
   notes in a conversion summary.
+- Exports the eight 64-step sequences in a V4 `.fm1` project (with optional
+  tuning data) as format 1 MIDI, including tempo, chords, velocity, gate/tie,
+  and drum steps.
+- MIDI export reads only the sequence stored in the project; it does not render
+  sounds, arpeggios or sample audio. 808 pads and sample slots map to General
+  MIDI drum notes.
 - English / 简体中文 UI, switchable in the page header (stored in
   `localStorage`).
 - Fully client-side: files are read with the File API and never uploaded.
@@ -62,10 +67,11 @@ Load the downloaded project on the device or in the FM1 editor as usual.
 | Item | Limit |
 | --- | --- |
 | Input | Standard MIDI File, format 0 or 1, up to 16 MiB, 100,000 notes |
-| Output | FM1P V4 `.fm1` project, 4064-byte payload (4264 with tuning) |
+| MIDI import output | FM1P V4 `.fm1` project, 4064-byte payload (4264 with tuning) |
+| MIDI export output | Standard MIDI format 1, 96 PPQN |
 | Sequence range | 64 sixteenth-note steps |
 | Project name | 12 ASCII characters |
-| Direction | MIDI → FM1 only (no FM1 → MIDI export) |
+| Direction | MIDI → FM1 and FM1 → standard MIDI |
 
 Drums only map to 808 tracks, and MIDI parts only map to tracks whose engine
 can play them; anything else is listed in the summary instead of being written.
@@ -77,7 +83,7 @@ Source layout:
 ```
 index.html          generated, self-contained page (committed for Pages)
 dev.html            same page with <script src="src/..."> for editing
-src/converter.js    MIDI parsing and FM1 project writing
+src/converter.js    MIDI parsing, FM1 project reading/writing and MIDI export
 src/i18n.js         UI string table (English / 简体中文)
 src/shell.html      page shell, converter markup and styles, script markers
 tools/build.py      assembles index.html and dev.html from src/

@@ -1,3 +1,5 @@
+[English](README.md) | [简体中文](README.zh-CN.md)
+
 # FM1 MIDI Converter
 
 A single-page, offline **MIDI → FM1 project** converter for the M-VAVE FM1

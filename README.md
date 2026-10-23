@@ -5,6 +5,8 @@ synthesizer. Drop a standard MIDI file and an FM1 V4 project template into the
 page, press **Convert project**, and download a `.fm1` project that keeps the
 template's sounds, effects and tuning.
 
+Try it [here](https://balancechiang.github.io/fm1-midi-converter/).
+
 ![Converter page](docs/screenshot.png)
 
 ## Features
